@@ -1,6 +1,6 @@
 module gnuplot_crafter.singlevar.singlevar_crafter_shared;
 
-import test.gnuplot_crafter.singlevar.singlevar_crafter_shared : test;
+import test.gnuplot_crafter.singlevar.singlevar_crafter_shared_test : test;
 mixin test;
 
 import gnuplot_crafter.unmatching_length_exception;

@@ -1,4 +1,4 @@
-module test.gnuplot_crafter.singlevar.singlevar_crafter_shared;
+module test.gnuplot_crafter.singlevar.singlevar_crafter_shared_test;
 
 mixin template test()
 {
