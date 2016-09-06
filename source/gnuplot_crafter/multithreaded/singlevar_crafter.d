@@ -1,6 +1,6 @@
-module gnuplot_crafter.singlevar.singlevar_crafter_shared;
+module gnuplot_crafter.multithreaded.singlevar_crafter;
 
-import test.gnuplot_crafter.singlevar.singlevar_crafter_shared_test : test;
+import test.gnuplot_crafter.multithreaded.singlevar_crafter_test : test;
 mixin test;
 
 import gnuplot_crafter.unmatching_length_exception;
@@ -15,11 +15,13 @@ public shared struct SingleVarCrafter(T = float)
 {
     immutable string workerThreadName;
 
+    static size_t counter = 0;
+
     this(string sinkFilename, bool append = true)
     {
         Tid t = spawn(&threadingLoop, sinkFilename, append);
 
-        workerThreadName = "a";
+        workerThreadName = "SingleVarCrafter" ~ to!string(counter++);
         register(workerThreadName, t);
 
         auto msg = receiveOnly!StartReport();
@@ -27,10 +29,17 @@ public shared struct SingleVarCrafter(T = float)
         enforce(msg == StartReport.success);
     }
 
+    /* I know this sucks, but it's necessary in some cases
+     if the struct is dynamically allocated and destroyed */
+    bool finalized = false;
     ~this()
     {
-        locate(workerThreadName).send(Order.finish);
-        receive((FinishReport msg){});
+        if(!finalized)
+        {
+            locate(workerThreadName).send(Order.finish);
+            receive((FinishReport msg){});
+            finalized=true;
+        }
     }
 
     public void put(bool flush = false)(T x, T y)

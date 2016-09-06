@@ -1,4 +1,4 @@
-module test.gnuplot_crafter.singlevar.singlevar_crafter_tls_test;
+module test.gnuplot_crafter.monothreaded.singlevar_crafter_test;
 
 mixin template test()
 {

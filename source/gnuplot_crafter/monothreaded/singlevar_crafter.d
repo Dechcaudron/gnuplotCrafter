@@ -1,6 +1,6 @@
-module gnuplot_crafter.singlevar.singlevar_crafter_tls;
+module gnuplot_crafter.monothreaded.singlevar_crafter;
 
-import test.gnuplot_crafter.singlevar.singlevar_crafter_tls_test : test;
+import test.gnuplot_crafter.monothreaded.singlevar_crafter_test : test;
 mixin test;
 
 import gnuplot_crafter.unmatching_length_exception;
