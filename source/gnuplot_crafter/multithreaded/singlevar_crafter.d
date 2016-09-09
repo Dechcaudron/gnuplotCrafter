@@ -10,6 +10,7 @@ import std.stdio;
 import std.exception;
 import std.format;
 import std.conv;
+import std.variant;
 
 public shared struct SingleVarCrafter(T = float)
 {
@@ -140,6 +141,10 @@ public shared struct SingleVarCrafter(T = float)
                             shouldContinue = false;
                             break;
                     }
+                },
+                (Variant v)
+                {
+                    debug writeln("Received variant " ~ to!string(v));
                 }
             );
         }
