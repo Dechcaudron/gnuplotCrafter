@@ -30,16 +30,13 @@ public shared struct SingleVarCrafter(T = float)
         enforce(msg == StartReport.success);
     }
 
-    /* I know this sucks, but it's necessary in some cases
-     if the struct is dynamically allocated and destroyed */
-    bool finalized = false;
     ~this()
     {
-        if(!finalized)
+        Tid workerThread = locate(workerThreadName);
+        if(workerThread != Tid.init)
         {
-            locate(workerThreadName).send(Order.finish);
+            workerThread.send(Order.finish);
             receive((FinishReport msg){});
-            finalized=true;
         }
     }
 

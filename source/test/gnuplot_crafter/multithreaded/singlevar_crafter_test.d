@@ -41,8 +41,7 @@ mixin template test()
 
         a.put(5, 2);
 
-        a.__dtor(); // destroy does not call the destructor so far. Bug??
-        destroy(a);
+        destroy(*a);
 
         File f = File(filePath, "r");
 
